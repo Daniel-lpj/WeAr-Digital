@@ -27,15 +27,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/api/registrar").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
-
+                .requestMatchers(HttpMethod.POST, "/api/registrar", "/api/login").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .and()
                 .csrf().disable()
+                .formLogin().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .formLogin().disable()
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
