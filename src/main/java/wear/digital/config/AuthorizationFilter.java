@@ -13,6 +13,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import wear.digital.model.Usuario;
 import wear.digital.service.TokenService;
 
 @Component
@@ -25,27 +26,30 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        // obter o token header
         var token = getToken(request);
 
+        // se tiver um token e ele for valido, autenticar
         if (token != null) {
-            var usuario = tokenService.valideAndGetUserBy(token);
+            Usuario usuario = tokenService.getUserByToken(token);
             Authentication auth = new UsernamePasswordAuthenticationToken(usuario.getEmail(), null,
                     usuario.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
+        // chama o proximo filtro
         filterChain.doFilter(request, response);
     }
 
     private String getToken(HttpServletRequest request) {
-        String prefix = "Bearer ";
-        var header = request.getHeader("Authorization");
+        var header = request.getHeader("Authorization"); // Bearer aieiaioehfsdjnfgjkdsbli
 
-        if (header == null || header.isEmpty() || !header.startsWith(prefix)) {
+        if (header == null || !header.startsWith("Bearer ")) {
             return null;
         }
 
-        return header.replace(prefix, "");
+        return header.replace("Bearer ", "");
 
     }
+
 }

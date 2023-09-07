@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import wear.digital.model.Credencial;
 import wear.digital.model.Token;
@@ -28,23 +29,22 @@ public class TokenService {
         Algorithm alg = Algorithm.HMAC256(secret);
         var token = JWT.create()
                 .withSubject(credencial.email())
-                .withExpiresAt(Instant.now().plus(1, ChronoUnit.HOURS))
                 .withIssuer("Wear")
+                .withExpiresAt(Instant.now().plus(20, ChronoUnit.MINUTES))
                 .sign(alg);
-
         return new Token(token, "JWT", "Bearer");
     }
 
-    public Usuario valideAndGetUserBy(String token) {
+    public Usuario getUserByToken(String token) {
         Algorithm alg = Algorithm.HMAC256(secret);
         var email = JWT.require(alg)
                 .withIssuer("Wear")
                 .build()
                 .verify(token)
                 .getSubject();
-
+        ;
         return usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new JWTVerificationException("Usuario invalido"));
     }
 
 }
