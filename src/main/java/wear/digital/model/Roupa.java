@@ -38,10 +38,10 @@ public class Roupa {
     private BigDecimal preco;
 
     @Column(name = "cor")
-    private ArrayList cor;
+    private ArrayList<String> cor;
 
     @Column(name = "tamanho")
-    private ArrayList tamanho;
+    private ArrayList<String> tamanho;
 
     // @ManyToOne
     // @JoinColumn(name = "semente_id")
