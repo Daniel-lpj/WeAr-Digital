@@ -23,13 +23,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "usuario")
+@Table(name = "usuario_roupa")
 public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usuario_id")
-    private Long id;
+    private Long usuario_id;
 
     @Column(name = "nome")
     private String nome;

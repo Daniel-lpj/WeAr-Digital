@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -14,6 +15,7 @@ import wear.digital.model.Token;
 import wear.digital.model.Usuario;
 import wear.digital.repository.UsuarioRepository;
 
+@Service
 public class TokenService {
 
     @Autowired

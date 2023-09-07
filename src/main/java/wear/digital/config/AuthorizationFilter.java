@@ -48,5 +48,4 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         return header.replace(prefix, "");
 
     }
-
 }
