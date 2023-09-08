@@ -40,13 +40,9 @@ public class Roupa {
     private BigDecimal preco;
 
     @Column(name = "cor")
-    private ArrayList<String> cor;
+    private String cor;
 
     @Column(name = "tamanho")
-    private ArrayList<String> tamanho;
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private String tamanho;
 
 }

@@ -29,12 +29,12 @@ public class RoupaController {
     @Autowired
     RoupaRepository repository;
 
-    @GetMapping("/")
+    @GetMapping()
     public List<Roupa> index() {
         return repository.findAll();
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Roupa> create(@RequestBody Roupa roupa) {
         log.info("cadastrando nova roupa: " + roupa);
         repository.save(roupa);
